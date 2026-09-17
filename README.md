@@ -13,7 +13,7 @@ A fast, arcade-style part-of-speech drill game for the browser. Vue 3 + Tailwind
 
 ## Difficulty settings
 
-Settings (gear icon on the home screen) let you pick which parts of speech are in play — start with just Noun/Verb/Adjective, then add Adverb, Pronoun, Preposition, Conjunction, Interjection, Gerund, and Participle as it gets easier. Only words tagged with an active category show up; the rest are skipped, no catch-all bucket. At least 2 categories must stay active. Two sliders help tune it for younger kids: time-per-word (3–30s, default 10s) and longest word shown (3–12 letters, default no limit).
+Settings (gear icon, visible on both the player-select and home screens) let you pick which parts of speech are in play — start with just Noun/Verb/Adjective, then add Adverb, Pronoun, Preposition, Conjunction, Interjection, Gerund, and Participle as it gets easier. Only words tagged with an active category show up; the rest are skipped, no catch-all bucket. At least 2 categories must stay active. Two sliders help tune it for younger kids: time-per-word (3–30s, default 10s) and longest word shown (3–12 letters, default no limit).
 
 ## Tech
 

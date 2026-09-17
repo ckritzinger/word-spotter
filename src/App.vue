@@ -61,6 +61,12 @@ function goHome() {
   screen.value = 'home'
 }
 
+// Settings can be opened from the profile-select screen (no active user
+// yet) as well as from Home — return to whichever one it was opened from.
+function backFromSettings() {
+  screen.value = activeUser.value ? 'home' : 'profiles'
+}
+
 function switchUser() {
   activeUserId.value = null
   setActiveUserId(null)
@@ -69,7 +75,13 @@ function switchUser() {
 </script>
 
 <template>
-  <ProfileSelect v-if="screen === 'profiles'" :users="users" @select="selectUser" @create="createAndSelectUser" />
+  <ProfileSelect
+    v-if="screen === 'profiles'"
+    :users="users"
+    @select="selectUser"
+    @create="createAndSelectUser"
+    @settings="screen = 'settings'"
+  />
 
   <Home
     v-else-if="screen === 'home' && activeUser"
@@ -83,7 +95,7 @@ function switchUser() {
   <Settings
     v-else-if="screen === 'settings'"
     :settings="settings"
-    @back="goHome"
+    @back="backFromSettings"
     @update-settings="updateSettings"
   />
 
