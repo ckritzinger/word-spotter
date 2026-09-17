@@ -6,12 +6,16 @@ import { answerOptions, buildPool, nextWord, CATEGORY_LABELS } from '../lib/word
 const props = defineProps({
   categories: { type: Array, required: true },
   rounds: { type: Number, required: true },
+  roundSeconds: { type: Number, required: true },
+  maxWordLength: { type: Number, required: true },
 })
 const emit = defineEmits(['finish'])
 
-const ROUND_MS = 10000
-const HALF_LIFE_MS = 3000 // asymptotic decay rate
-const AUTO_MISS_ELAPSED_MS = 15000 // hard wall-clock cap
+// Derived from the configured time-per-word so the decay curve keeps the
+// same shape (fast-then-slowing) at any duration — only the pace scales.
+const ROUND_MS = props.roundSeconds * 1000
+const HALF_LIFE_MS = ROUND_MS * 0.3 // asymptotic decay rate
+const AUTO_MISS_ELAPSED_MS = ROUND_MS * 1.5 // hard wall-clock cap
 const AUTO_MISS_REMAINING_MS = 50 // negligible-threshold floor
 
 const MULTIPLIERS = [1, 1.5, 2, 2.5]
@@ -30,7 +34,7 @@ const STREAK_THEMES = [
 const CONFETTI_COLORS = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#eab308', '#14b8a6']
 
 // Buttons are fixed for the whole game — categories don't change mid-run.
-const pool = buildPool(words, props.categories)
+const pool = buildPool(words, props.categories, props.maxWordLength)
 const buttons = answerOptions(props.categories).map((key) => ({ key, label: CATEGORY_LABELS[key] }))
 const gridColsClass = buttons.length <= 4 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'
 

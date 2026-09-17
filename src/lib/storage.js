@@ -3,8 +3,10 @@ const SETTINGS_KEY = 'ws_settings'
 const ACTIVE_USER_KEY = 'ws_active_user'
 
 const DEFAULT_SETTINGS = {
-  categories: ['noun', 'verb', 'adjective', 'adverb'],
+  categories: ['noun', 'verb', 'adjective'],
   rounds: 20,
+  roundSeconds: 10,
+  maxWordLength: 12,
 }
 
 export const AVATARS = ['🦉', '📚', '✏️', '🔤', '🐝', '🧠', '🎓', '📖', '🦊', '🐸', '🦄', '🐙']

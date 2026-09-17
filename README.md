@@ -5,15 +5,15 @@ A fast, arcade-style part-of-speech drill game for the browser. Vue 3 + Tailwind
 ## How it plays
 
 - Pick (or create) a local player profile.
-- Each round shows a word and a grid of part-of-speech buttons (Noun, Verb, Adjective, Adverb by default).
-- A countdown bar depletes asymptotically over ~10 seconds — answer fast for more points.
+- Each round shows a word and a grid of part-of-speech buttons (Noun, Verb, Adjective by default).
+- A countdown bar depletes asymptotically over a configurable time-per-word (default 10s, 3–30s range) — answer fast for more points.
 - Correct answers score the remaining time (in ms) at the moment you tap, multiplied by your current streak multiplier (1x → 1.5x → 2x → 2.5x, capped). A wrong answer resets the streak.
 - No repeated words within a game until the pool is exhausted, then repeats are allowed.
 - After the configured number of rounds, see your total score against your personal best, and check the leaderboard against other local profiles.
 
 ## Difficulty settings
 
-Settings (PIN-gated, `1337`) let you pick which parts of speech are in play — start with just Noun/Verb/Adjective/Adverb, then add Pronoun, Preposition, Conjunction, Interjection, Gerund, and Participle as it gets easier. Only words tagged with an active category show up; the rest are skipped, no catch-all bucket. At least 2 categories must stay active.
+Settings (gear icon on the home screen) let you pick which parts of speech are in play — start with just Noun/Verb/Adjective, then add Adverb, Pronoun, Preposition, Conjunction, Interjection, Gerund, and Participle as it gets easier. Only words tagged with an active category show up; the rest are skipped, no catch-all bucket. At least 2 categories must stay active. Two sliders help tune it for younger kids: time-per-word (3–30s, default 10s) and longest word shown (3–12 letters, default no limit).
 
 ## Tech
 
@@ -51,7 +51,6 @@ src/
   components/
     ProfileSelect.vue     # "who's playing" screen, profile create
     Home.vue               # per-player home, start game / leaderboard
-    PinGate.vue             # PIN-gated entry to settings
     Settings.vue           # part-of-speech category toggles, rounds-per-game
     Game.vue               # core round loop, timer, scoring, streak, confetti
     Summary.vue            # end-of-game score vs. personal best
@@ -61,7 +60,7 @@ src/
     storage.js             # localStorage read/write for users & settings
     wordGen.js              # category ordering + word-pool/pick logic
   data/
-    words.js               # curated ~220-word list tagged by part of speech
+    words.js               # curated 577-word list tagged by part of speech (181 noun / 128 verb / 170 adjective, each with a short-word pass)
 ```
 
 ## Spec

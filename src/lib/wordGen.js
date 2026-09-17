@@ -36,18 +36,24 @@ export function answerOptions(categories) {
 
 /**
  * Build the pool of playable words for the active settings: only words
- * whose tag is one of the enabled categories. Words tagged with a
+ * whose tag is one of the enabled categories, and (if maxWordLength is
+ * given) no longer than maxWordLength characters. Words tagged with a
  * category that isn't enabled are omitted entirely, not lumped together.
  */
-export function buildPool(words, categories) {
+export function buildPool(words, categories, maxWordLength = Infinity) {
   const set = new Set(categories)
   const pool = []
+  const unfiltered = []
   for (const w of words) {
-    if (set.has(w.pos)) {
-      pool.push({ word: w.word, answer: w.pos })
-    }
+    if (!set.has(w.pos)) continue
+    const entry = { word: w.word, answer: w.pos }
+    unfiltered.push(entry)
+    if (w.word.length <= maxWordLength) pool.push(entry)
   }
-  return pool
+  // Guard against a maxWordLength so low it excludes every word in the
+  // chosen categories (e.g. gerund/participle have no very short words) —
+  // fall back to the unfiltered pool rather than leaving nothing to play.
+  return pool.length > 0 ? pool : unfiltered
 }
 
 /**

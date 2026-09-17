@@ -7,9 +7,13 @@ const props = defineProps({
 })
 const emit = defineEmits(['back', 'update-settings'])
 
+const MAX_WORD_LENGTH_CAP = 12 // longest word in the data set — this value means "no limit"
+
 const local = reactive({
   categories: [...props.settings.categories],
   rounds: props.settings.rounds,
+  roundSeconds: props.settings.roundSeconds,
+  maxWordLength: props.settings.maxWordLength,
 })
 
 function isChecked(key) {
@@ -32,7 +36,9 @@ watch(
   local,
   (val) => {
     const rounds = Math.max(5, Math.min(Number(val.rounds) || 20, 100))
-    emit('update-settings', { categories: [...val.categories], rounds })
+    const roundSeconds = Math.max(3, Math.min(Number(val.roundSeconds) || 10, 30))
+    const maxWordLength = Math.max(3, Math.min(Number(val.maxWordLength) || MAX_WORD_LENGTH_CAP, MAX_WORD_LENGTH_CAP))
+    emit('update-settings', { categories: [...val.categories], rounds, roundSeconds, maxWordLength })
   },
   { deep: true },
 )
@@ -76,6 +82,40 @@ watch(
           min="5"
           max="100"
           class="w-16 rounded-lg border border-slate-300 px-2 py-1 text-center"
+        />
+      </div>
+
+      <div class="mt-6">
+        <div class="flex items-center justify-between gap-3">
+          <label class="text-sm font-semibold text-slate-600">Time per word</label>
+          <span class="text-sm font-bold text-indigo-600">{{ local.roundSeconds }}s</span>
+        </div>
+        <p class="mt-1 text-xs text-slate-400">More time gives a younger kid room to read and decide.</p>
+        <input
+          v-model.number="local.roundSeconds"
+          type="range"
+          min="3"
+          max="30"
+          step="1"
+          class="mt-2 w-full accent-indigo-500"
+        />
+      </div>
+
+      <div class="mt-6">
+        <div class="flex items-center justify-between gap-3">
+          <label class="text-sm font-semibold text-slate-600">Longest word shown</label>
+          <span class="text-sm font-bold text-indigo-600">
+            {{ local.maxWordLength >= MAX_WORD_LENGTH_CAP ? 'No limit' : `${local.maxWordLength} letters` }}
+          </span>
+        </div>
+        <p class="mt-1 text-xs text-slate-400">Cap word length for younger kids still learning to read.</p>
+        <input
+          v-model.number="local.maxWordLength"
+          type="range"
+          min="3"
+          :max="MAX_WORD_LENGTH_CAP"
+          step="1"
+          class="mt-2 w-full accent-indigo-500"
         />
       </div>
     </div>

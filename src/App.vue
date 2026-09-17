@@ -11,7 +11,6 @@ import {
 } from './lib/storage.js'
 import ProfileSelect from './components/ProfileSelect.vue'
 import Home from './components/Home.vue'
-import PinGate from './components/PinGate.vue'
 import Settings from './components/Settings.vue'
 import Game from './components/Game.vue'
 import Summary from './components/Summary.vue'
@@ -78,10 +77,8 @@ function switchUser() {
     @start="startGame"
     @leaderboard="screen = 'leaderboard'"
     @switch-user="switchUser"
-    @settings="screen = 'pin'"
+    @settings="screen = 'settings'"
   />
-
-  <PinGate v-else-if="screen === 'pin'" @back="goHome" @unlocked="screen = 'settings'" />
 
   <Settings
     v-else-if="screen === 'settings'"
@@ -94,6 +91,8 @@ function switchUser() {
     v-else-if="screen === 'game'"
     :categories="settings.categories"
     :rounds="settings.rounds"
+    :round-seconds="settings.roundSeconds"
+    :max-word-length="settings.maxWordLength"
     @finish="finishGame"
   />
 
