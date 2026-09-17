@@ -144,9 +144,12 @@ best framing on the summary screen, animated "letter rain" background
 and home screens.
 
 ## Settings Access
-Open — the gear icon on the home screen goes straight to Settings, no
-PIN gate. (× Blitz gates its Settings behind a PIN as a soft speed-bump;
-that was tried here too and removed per explicit feedback.)
+Open — a gear icon, visible on both the player-select screen (so
+settings can be reached even before any profile is picked) and the home
+screen, goes straight to Settings, no PIN gate. (× Blitz gates its
+Settings behind a PIN as a soft speed-bump; that was tried here too and
+removed per explicit feedback.) Settings' "← Back" returns to whichever
+of those two screens it was opened from.
 
 ## Explicitly Out of Scope / Undecided
 - Full grammatical parsing / sentence context (words are shown in
